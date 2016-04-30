@@ -26,6 +26,8 @@ import textwrap
 import logging
 from docpie import docpie, logger as pielog
 
+__version__ = '0.0.2'
+__author__ = 'TylerTemp <tylertempdev@gmail.com>'
 
 if sys.version_info[0] < 3:
     from codecs import open
@@ -163,7 +165,8 @@ def main(argv=None):
         content = get_data(fname)
         raw_color = args['--color']
         if raw_color is None:
-            color = get_color_next_index() or 1
+            color_index = get_color_next_index() or 1
+            color = get_color(index=color_index)['color']
         elif raw_color.startswith('#'):
             color = raw_color
         elif raw_color.isdigit():
