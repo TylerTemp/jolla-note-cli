@@ -26,11 +26,23 @@ import textwrap
 import logging
 from docpie import docpie, logger as pielog
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 __author__ = 'TylerTemp <tylertempdev@gmail.com>'
 
 if sys.version_info[0] < 3:
     from codecs import open
+
+try:
+    import io
+except ImportError:
+
+    def decoded_stdin():
+        return sys.stdin
+
+else:
+
+    def decode_stdin():
+        return io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -143,7 +155,7 @@ def list_all():
 
 def get_data(file=None):
     if file is None:
-        return sys.stdin.read()
+        return decode_stdin().read()
     elif hasattr(file, 'read'):
         return file.read()
     else:
