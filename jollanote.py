@@ -26,7 +26,7 @@ import textwrap
 import logging
 from docpie import docpie, logger as pielog
 
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 __author__ = 'TylerTemp <tylertempdev@gmail.com>'
 
 if sys.version_info[0] < 3:
@@ -146,10 +146,13 @@ def list_all():
                     color = '(%s) %s' % (color_detail['index'], color)
 
         print('%s[%s]' % (index_pref, color))
-        print('\n'.join(
-                textwrap.wrap(content,
-                              initial_indent=' ' * indent,
-                              subsequent_indent=' ' * indent)))
+        try:
+            print('\n'.join(
+                    textwrap.wrap(content,
+                                  initial_indent=' ' * indent,
+                                  subsequent_indent=' ' * indent)))
+        except UnicodeEncodeError:
+            print(content.encode('utf-8'))
         print('')
 
 

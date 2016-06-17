@@ -25,7 +25,7 @@ setup(
             'README.md'
         ]
     },
-    version='0.0.3',
+    version='0.0.4',
     author='TylerTemp',
     author_email='tylertempdev@gmail.com',
     url='https://github.com/TylerTemp/jolla-note-cli',
