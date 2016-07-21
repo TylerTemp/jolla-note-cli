@@ -24,9 +24,10 @@ import os
 import sys
 import textwrap
 import logging
+import random
 from docpie import docpie, logger as pielog
 
-__version__ = '0.0.4'
+__version__ = '0.0.5'
 __author__ = 'TylerTemp <tylertempdev@gmail.com>'
 
 if sys.version_info[0] < 3:
@@ -79,6 +80,12 @@ colors = (
 def close():
     cursor.close()
     connector.close()
+
+
+cursor.execute("SELECT count(*) FROM sqlite_master "
+               "WHERE type='table' AND name='next_color_index'")
+
+has_index_table = cursor.fetchone() == (0,)
 
 
 def get_color(**kwargs):
@@ -180,8 +187,11 @@ def main(argv=None):
         content = get_data(fname)
         raw_color = args['--color']
         if raw_color is None:
-            color_index = get_color_next_index() or 1
-            color = get_color(index=color_index)['color']
+            if has_index_table:
+                color_index = get_color_next_index() or 1
+                color = get_color(index=color_index)['color']
+            else:
+                color_index = random.choice(colors)['color']
         elif raw_color.startswith('#'):
             color = raw_color
         elif raw_color.isdigit():
