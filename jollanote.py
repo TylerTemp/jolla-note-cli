@@ -85,7 +85,7 @@ def close():
 cursor.execute("SELECT count(*) FROM sqlite_master "
                "WHERE type='table' AND name='next_color_index'")
 
-has_index_table = cursor.fetchone() == (0,)
+has_index_table = cursor.fetchone() != (0,)
 
 
 def get_color(**kwargs):
