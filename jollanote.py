@@ -191,7 +191,7 @@ def main(argv=None):
                 color_index = get_color_next_index() or 1
                 color = get_color(index=color_index)['color']
             else:
-                color_index = random.choice(colors)['color']
+                color = random.choice(colors)['color']
         elif raw_color.startswith('#'):
             color = raw_color
         elif raw_color.isdigit():
